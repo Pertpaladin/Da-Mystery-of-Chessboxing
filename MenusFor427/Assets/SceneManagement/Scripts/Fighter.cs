@@ -8,11 +8,12 @@ public class Fighter {
     public int team;
     public float health;
     public int xPos;
-    public int yPos;
+    public int zPos;
     public int range;
     public float attackStat;
     public float defenseStat;
     public string fighterName;
+    public int model;
 
 	public Fighter(int t,int menuSelectX,int menuSelectY)
     {
@@ -29,6 +30,15 @@ public class Fighter {
                     case 1:
                     case 2:
                     case 3:
+                        //model = GameManager.fighterGameObjects[menuSelectX * 4 + menuSelectY];
+                        model = menuSelectX * 4 + menuSelectY;
+                        range = 5;
+                        xPos = menuSelectX;
+                        zPos = menuSelectY;
+                        attackStat = 5;
+                        defenseStat = 5;
+                        health = 5;
+                        fighterName = t + " Team " + menuSelectX.ToString() + menuSelectY.ToString();
                         break;
                 }
                 break;
@@ -39,6 +49,15 @@ public class Fighter {
                     case 1:
                     case 2:
                     case 3:
+                        //model = GameManager.fighterGameObjects[menuSelectX * 4 + menuSelectY];
+                        model = menuSelectX * 4 + menuSelectY;
+                        range = 5;
+                        xPos = menuSelectX;
+                        zPos = menuSelectY;
+                        attackStat = 5;
+                        defenseStat = 5;
+                        health = 5;
+                        fighterName = t + " Team " + menuSelectX.ToString() + menuSelectY.ToString();
                         break;
                 }
                 break;
@@ -50,7 +69,7 @@ public class Fighter {
     public void Formation(int augX, int augY)
     {
         xPos += augX;
-        yPos += augY;
+        zPos += augY;
         //alter gamemanager objects too
     }
 }

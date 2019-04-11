@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class CharacterSelectController : MonoBehaviour
 {
+    //public GameObject playerModel;
     Image[] buttons;
     int P1teamIndex;
     int P2teamIndex;
@@ -24,6 +25,7 @@ public class CharacterSelectController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        //GameManager.fighterGameObjects[0] = playerModel;
         posChanged = false;
         P1X = 0;
         P1Y = 0;
@@ -269,7 +271,7 @@ public class CharacterSelectController : MonoBehaviour
         {
             if (GameManager.IncludeGameGrid)
             {
-                SceneManager.LoadScene("Gridmode");
+                SceneManager.LoadScene("GridDemo");
             } else
             {
                 SceneManager.LoadScene("FightMode");

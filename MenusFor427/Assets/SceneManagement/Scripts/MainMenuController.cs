@@ -6,16 +6,29 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour {
 
+    
     Image[] buttons;
     int index;
     int previousInput = 0;
 	// Use this for initialization
 	void Start () {
+
+        GameManager.turn = -1;
         index = 0;
         buttons = new Image[3];
         buttons[0] = GameObject.Find("Chessboxing").GetComponent<Image>();
         buttons[1] = GameObject.Find("Boxing").GetComponent<Image>();
         buttons[2] = GameObject.Find("Quit").GetComponent<Image>();
+        /*
+        GameManager.fighterGameObjects[0] = CHAR00;
+        GameManager.fighterGameObjects[1] = CHAR01;
+        GameManager.fighterGameObjects[2] = CHAR02;
+        GameManager.fighterGameObjects[3] = CHAR03;
+        GameManager.fighterGameObjects[4] = CHAR10;
+        GameManager.fighterGameObjects[5] = CHAR11;
+        GameManager.fighterGameObjects[6] = CHAR12;
+        GameManager.fighterGameObjects[7] = CHAR13;
+        */
     }
 	
 	// Update is called once per frame

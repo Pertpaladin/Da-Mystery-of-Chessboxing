@@ -890,6 +890,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea867037422037544a939b9831489562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CHAR00: {fileID: 1562892072626660, guid: af5e38d5a3daefd47a6e025913db52a8, type: 2}
+  CHAR01: {fileID: 1562892072626660, guid: af5e38d5a3daefd47a6e025913db52a8, type: 2}
+  CHAR02: {fileID: 1562892072626660, guid: af5e38d5a3daefd47a6e025913db52a8, type: 2}
+  CHAR03: {fileID: 1562892072626660, guid: af5e38d5a3daefd47a6e025913db52a8, type: 2}
+  CHAR10: {fileID: 1562892072626660, guid: af5e38d5a3daefd47a6e025913db52a8, type: 2}
+  CHAR11: {fileID: 1562892072626660, guid: af5e38d5a3daefd47a6e025913db52a8, type: 2}
+  CHAR12: {fileID: 1562892072626660, guid: af5e38d5a3daefd47a6e025913db52a8, type: 2}
+  CHAR13: {fileID: 1562892072626660, guid: af5e38d5a3daefd47a6e025913db52a8, type: 2}
 --- !u!1 &616881817
 GameObject:
   m_ObjectHideFlags: 0
