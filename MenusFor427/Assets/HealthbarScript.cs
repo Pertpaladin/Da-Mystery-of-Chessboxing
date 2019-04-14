@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class HealthbarScript : MonoBehaviour {
     Slider slider;
     int playerIndex;
-    public Color teamColor;
     GameObject cam;
     Vector3 offset;
     Vector3 bounceOffset;
@@ -16,8 +15,6 @@ public class HealthbarScript : MonoBehaviour {
 	void Start () {
         slider = GetComponent<Slider>();
         cam = GameObject.Find("Main Camera");
-        
-        teamColor = Color.black;
         offset = new Vector3(0, 10f, 0);
         bounceOffset = new Vector3(0, 3f, 0);
         transform.position = GridSceneManager.CharacterModels[playerIndex].transform.position + offset;
@@ -38,15 +35,19 @@ public class HealthbarScript : MonoBehaviour {
     public void SetPlayer(int index)
     {
         playerIndex = index;
-        if(index > 3)
+        if(index < 4)
         {
-            teamColor = Color.blue;
-        } else
-        {
-            teamColor = Color.red;
+            //slider.fillRect = (RectTransform)transform.Find("FillArea");
+            transform.Find("FillArea").Find("Fill(2)").gameObject.SetActive(false);
+            transform.Find("FillArea").Find("Fill").gameObject.SetActive(false);
         }
-        //make translucent
-
+        else
+        {
+            //slider.fillRect = (RectTransform)transform.Find("Fill Area").Find("Fill (2)");
+            transform.Find("FillArea").Find("Fill(1)").gameObject.SetActive(false);
+            transform.Find("FillArea").Find("Fill").gameObject.SetActive(false);
+            slider.fillRect = transform.Find("FillArea").Find("Fill(2)").GetComponent<RectTransform>();
+        }
     }
     IEnumerator bounce()
     {
