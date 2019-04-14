@@ -21,6 +21,15 @@ public class Fighter {
         menuY = menuSelectY;
 
         team = t;
+        model = menuSelectX + menuSelectY * 4;
+        range = 5;
+        xPos = menuSelectX;
+        zPos = menuSelectY;
+        attackStat = 5;
+        defenseStat = 5;
+        health = 5;
+        fighterName = t + " Team " + menuSelectX.ToString() + menuSelectY.ToString();
+        /*
         switch (menuSelectX)
         {
             case 0:
@@ -63,6 +72,7 @@ public class Fighter {
                 break;
                 // attributes instantiated on character select
         }
+        */
         //Pos set to start square
         //
     }

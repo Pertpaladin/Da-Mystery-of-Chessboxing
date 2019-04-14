@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour {
     Vector3 cursorPos;
     Vector3 nodePos;
-    Vector3 cameraOffset;
+    public Vector3 cameraOffset;
 	// Use this for initialization
 	void Start () {
         

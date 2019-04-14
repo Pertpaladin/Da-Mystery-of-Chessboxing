@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class GridSceneManager : MonoBehaviour {
+public class GridSceneManager : MonoBehaviour
+{
 
     //grid
     public GameObject CHAR00;
@@ -14,17 +16,18 @@ public class GridSceneManager : MonoBehaviour {
     public GameObject CHAR11;
     public GameObject CHAR12;
     public GameObject CHAR13;
+    public GameObject HealthBar;
     GameObject[,] tiles;
     int[,] whereThePlayers;
     GameObject SpeculateSheet;
     GameObject SpeculateTile;
     GameObject DeadTile;
-    GameObject[] CharacterModels;
+    public static GameObject[] CharacterModels;
     public int sheetxWide;
     public int sheetzWide;
     public int xWide;
     public int zWide;
-    
+
 
     //UI
     public static GameObject Cursor;
@@ -42,22 +45,22 @@ public class GridSceneManager : MonoBehaviour {
     int previousDX2;
     int previousDY1;
     int previousDY2;
-    
+
 
     // Use this for initialization
-    void Awake()
+    void Start()
     {
         DeadTile = GameObject.Find("Plane");
         Cursor = GameObject.Find("Cursor");
         takeInput = false;
-        whereThePlayers = new int[8,2];
+        whereThePlayers = new int[8, 2];
         movementStack = new Stack<GameObject>();
         CharacterModels = new GameObject[8];
 
-        GameManager.turn = -1;
+        //GameManager.turn = -1;
         //Map SceneGrid to GameManagerGrid
         //Only at start of Game
-        if (GameManager.turn == -1)
+        if (true)//GameManager.turn == -1)
         {
             tiles = new GameObject[xWide * sheetxWide, zWide * sheetzWide];
             for (int i = 0; i < sheetxWide; i++)
@@ -96,37 +99,42 @@ public class GridSceneManager : MonoBehaviour {
         GameManager.fighterGameObjects[5] = CHAR11;
         GameManager.fighterGameObjects[6] = CHAR12;
         GameManager.fighterGameObjects[7] = CHAR13;
-
-        GameManager.fighters[0] = new Fighter(1, 0, 0);
-        GameManager.fighters[1] = new Fighter(1, 0, 1);
-        GameManager.fighters[2] = new Fighter(1, 0, 2);
-        GameManager.fighters[3] = new Fighter(1, 0, 3);
-        GameManager.fighters[4] = new Fighter(2, 1, 0);
-        GameManager.fighters[5] = new Fighter(2, 1, 1);
-        GameManager.fighters[6] = new Fighter(2, 1, 2);
-        GameManager.fighters[7] = new Fighter(2, 1, 3);
-            //place characters
-            for(int i = 0; i < 8; i++)
-            {
-                CharacterModels[i] = Instantiate(GameManager.fighterGameObjects[GameManager.fighters[i].model], GameManager.gridSpaces[GameManager.fighters[i].xPos, GameManager.fighters[i].zPos].transform.position, new Quaternion());
-                whereThePlayers[i, 0] = GameManager.fighters[i].xPos;
-                whereThePlayers[i,1] = GameManager.fighters[i].zPos;
-                //Debug.Log("Char " + i + " at " + GameManager.gridSpaces[GameManager.fighters[i].xPos, GameManager.fighters[i].zPos].transform.name);
-            }
-            if(GameManager.turn > -1)
-            {
-                //Display Fight Results
-            }
-            NextTurn();
         
+        GameManager.fighters[0] = new Fighter(1, 0, 0);
+        GameManager.fighters[1] = new Fighter(1, 1, 0);
+        GameManager.fighters[2] = new Fighter(1, 2, 0);
+        GameManager.fighters[3] = new Fighter(1, 3, 0);
+        GameManager.fighters[4] = new Fighter(2, 0, 1);
+        GameManager.fighters[5] = new Fighter(2, 1, 1);
+        GameManager.fighters[6] = new Fighter(2, 2, 1);
+        GameManager.fighters[7] = new Fighter(2, 3, 1);
+        
+        //place characters
+        for (int i = 0; i < 8; i++)
+        {
+            Debug.Log(GameManager.fighters[i].model);
+            CharacterModels[i] =
+                Instantiate(GameManager.fighterGameObjects[GameManager.fighters[i].model],
+                GameManager.gridSpaces[GameManager.fighters[i].xPos, GameManager.fighters[i].zPos].transform.position, new Quaternion());
+            whereThePlayers[i, 0] = GameManager.fighters[i].xPos;
+            whereThePlayers[i, 1] = GameManager.fighters[i].zPos;
+            Debug.Log("Char " + i + " at " + GameManager.gridSpaces[GameManager.fighters[i].xPos, GameManager.fighters[i].zPos].transform.name);
+            //CharacterModels[i].transform.Find("Canvas").Find("Slider").GetComponent<HealthbarScript>().SetPlayer(i);
+            Instantiate(HealthBar).GetComponentInChildren<HealthbarScript>().SetPlayer(i);
+        }
+        if (GameManager.turn > -1)
+        {
+            Debug.Log("DisplayResults");
+            //Display Fight Results
+        }
+        NextTurn();
+
     }
 
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         if (takeInput)
         {
             switch (GameManager.turn)
@@ -137,7 +145,7 @@ public class GridSceneManager : MonoBehaviour {
                 case 3:
                     if (Input.GetButton("X1"))
                     {
-                        //MapView
+                        //Switch Character
 
                         //A - Select Tile
                     }
@@ -174,7 +182,7 @@ public class GridSceneManager : MonoBehaviour {
                             whereThePlayers[GameManager.turn, 1] = cursorY;
                             currentCharacter.xPos = cursorX;
                             currentCharacter.zPos = cursorY;
-                            
+
                             break;
                         }
                     }
@@ -230,7 +238,8 @@ public class GridSceneManager : MonoBehaviour {
                                 movementStack.Pop();
                                 range--;
                             }
-                        } else if (enemyOccupied && range != 0)
+                        }
+                        else if (enemyOccupied && range != 0)
                         {
                             cursorX -= (int)Input.GetAxisRaw("DX1");
                         }
@@ -306,7 +315,8 @@ public class GridSceneManager : MonoBehaviour {
                                 movementStack.Pop();
                                 range--;
                             }
-                        } else if (enemyOccupied && range > 0)
+                        }
+                        else if (enemyOccupied && range > 0)
                         {
                             cursorY -= (int)Input.GetAxisRaw("DY1");
                         }
@@ -374,7 +384,7 @@ public class GridSceneManager : MonoBehaviour {
                         {
                             takeInput = false;
                             CheckForEnemy();
-                            
+
                         }
                         //move
                         else
@@ -534,7 +544,8 @@ public class GridSceneManager : MonoBehaviour {
                                 movementStack.Pop();//.GetComponent<Material>().color = Color.gray;
                                 range--;
                             }
-                        } else if (enemyOccupied && range > 0)
+                        }
+                        else if (enemyOccupied && range > 0)
                         {
                             cursorY -= (int)Input.GetAxisRaw("DY2");
                         }
@@ -588,12 +599,12 @@ public class GridSceneManager : MonoBehaviour {
                         previousDY2 = 0;
                     }
                     break;
-                    
+
                 default:
                     break;
             }
         }
-	}
+    }
 
     //start of turn
     void NextTurn()
@@ -613,7 +624,7 @@ public class GridSceneManager : MonoBehaviour {
     }
 
 
-    
+
 
     IEnumerator MoveCharacter(GameObject[] Path)
     {
@@ -621,11 +632,11 @@ public class GridSceneManager : MonoBehaviour {
         //turn on walk animation
 
         Debug.Log("MoveCharacterCalled");
-        for(int i = Path.Length-1; i >= 0; i--)
+        for (int i = Path.Length - 1; i >= 0; i--)
         {
             Debug.Log("Going to " + Path[i].name);
             guy.transform.LookAt(new Vector3(Path[i].transform.position.x, guy.transform.position.y, Path[i].transform.position.z));
-            while((guy.transform.position-Path[i].transform.position).magnitude > 0)
+            while ((guy.transform.position - Path[i].transform.position).magnitude > 0)
             {
                 guy.transform.position = Vector3.Lerp(guy.transform.position, Path[i].transform.position, 1);
                 yield return new WaitForSeconds(0.5f);
@@ -637,6 +648,7 @@ public class GridSceneManager : MonoBehaviour {
 
     void CheckForEnemy()
     {
+        bool newScene = false;
         for (int i = 0; i < 8; i++)
         {
             if (i == GameManager.turn)
@@ -645,18 +657,23 @@ public class GridSceneManager : MonoBehaviour {
             }
             else if (cursorX == whereThePlayers[i, 0] && cursorY - (int)Input.GetAxisRaw("DY2") == whereThePlayers[i, 1])
             {
-                if(currentCharacter.team == 1)
+                if (currentCharacter.team == 1)
                 {
                     GameManager.team1fighterIndex = GameManager.turn;
                     GameManager.team2fighterIndex = i;
-                } else
+                }
+                else
                 {
                     GameManager.team2fighterIndex = GameManager.turn;
                     GameManager.team1fighterIndex = i;
                 }
-                //start Fight Scene
+                newScene = true;
+                SceneManager.LoadScene("DummyScene");
             }
         }
-        NextTurn();
+        if (!newScene)
+        {
+            NextTurn();
+        }
     }
 }
