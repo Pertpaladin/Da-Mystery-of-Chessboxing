@@ -19,11 +19,21 @@ public class character : MonoBehaviour {
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, 0.0f);
         rb.AddForce(movement * speed);
         Debug.Log(Input.GetAxis("Horizontal"));
-        if (Input.GetAxis("Horizontal") > 0)
+        if (Input.GetAxis("Horizontal") > 0.1)
+        {
             animator.SetFloat("movement", Input.GetAxis("Horizontal"));
-            animator.SetBool("stopped", )
-        else
-            animator.SetBool("stopeed", true);
+            animator.SetBool("stopped", false);
+        }
+        if (Input.GetAxis("Horizontal") < -0.1)
+        {
+            animator.SetFloat("movement", Input.GetAxis("Horizontal"));
+            animator.SetBool("stopped", false);
+        }
+        if(Input.GetAxis("Horizontal") == 0)
+        {
+            animator.SetFloat("movement", Input.GetAxis("Horizontal"));
+            animator.SetBool("stopped", true);
+        }
     }
 
     // Update is called once per frame
