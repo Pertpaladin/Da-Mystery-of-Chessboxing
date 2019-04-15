@@ -31,6 +31,9 @@ public class HealthImage : MonoBehaviour
     {
         image.fillAmount = GameManager.fighters[playerIndex].health;
         transform.LookAt(transform.position + cam.GetComponent<CameraFollow>().cameraOffset);
+        //transform.LookAt(cam.transform);
+        //transform.rotation = Quaternion.Lerp(transform.rotation, cam.transform.rotation, 0.05f);
+        //transform.LookAt(Vector3.Lerp(transform.position + cam.GetComponent<CameraFollow>().previousOffset, transform.position + cam.GetComponent<CameraFollow>().cameraOffset, 0.05f));
     }
     public void SetPlayer(int index)
     {
