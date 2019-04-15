@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GridSceneManager : MonoBehaviour
 {
@@ -16,7 +17,11 @@ public class GridSceneManager : MonoBehaviour
     public GameObject CHAR11;
     public GameObject CHAR12;
     public GameObject CHAR13;
-    public GameObject HealthBar;
+    public GameObject HealthBarBlue;
+    public GameObject LeaderHealthBarBlue;
+    public GameObject HealthBarRed;
+    public GameObject LeaderHealthBarRed;
+
     GameObject[,] tiles;
     int[,] whereThePlayers;
     GameObject SpeculateSheet;
@@ -46,6 +51,7 @@ public class GridSceneManager : MonoBehaviour
     int previousDY1;
     int previousDY2;
 
+    List<int> CharactersToMove;
 
     // Use this for initialization
     void Start()
@@ -56,6 +62,7 @@ public class GridSceneManager : MonoBehaviour
         whereThePlayers = new int[8, 2];
         movementStack = new Stack<GameObject>();
         CharacterModels = new GameObject[8];
+        CharactersToMove = new List<int>();
 
         //GameManager.turn = -1;
         //Map SceneGrid to GameManagerGrid
@@ -120,7 +127,20 @@ public class GridSceneManager : MonoBehaviour
             whereThePlayers[i, 1] = GameManager.fighters[i].zPos;
             Debug.Log("Char " + i + " at " + GameManager.gridSpaces[GameManager.fighters[i].xPos, GameManager.fighters[i].zPos].transform.name);
             //CharacterModels[i].transform.Find("Canvas").Find("Slider").GetComponent<HealthbarScript>().SetPlayer(i);
-            Instantiate(HealthBar).GetComponentInChildren<HealthbarScript>().SetPlayer(i);
+            if(i == 0)
+            {
+                Instantiate(LeaderHealthBarRed).GetComponent<HealthImage>().SetPlayer(i);
+            } else if(i < 4)
+            {
+                Instantiate(HealthBarRed).GetComponent<HealthImage>().SetPlayer(i);
+            }
+            else if (i == 4)
+            {
+                Instantiate(LeaderHealthBarBlue).GetComponent<HealthImage>().SetPlayer(i);
+            } else if (i <= 7 && i > 4)
+            {
+                Instantiate(HealthBarBlue).GetComponent<HealthImage>().SetPlayer(i);
+            }
         }
         if (GameManager.turn > -1)
         {
@@ -143,10 +163,10 @@ public class GridSceneManager : MonoBehaviour
                 case 1:
                 case 2:
                 case 3:
-                    if (Input.GetButton("X1"))
+                    if (Input.GetButtonDown("X1"))
                     {
                         //Switch Character
-
+                        SwitchCharacter();
                         //A - Select Tile
                     }
                     else if (Input.GetButtonDown("A1"))
@@ -371,10 +391,10 @@ public class GridSceneManager : MonoBehaviour
                 case 5:
                 case 6:
                 case 7:
-                    if (Input.GetButton("X2"))
+                    if (Input.GetButtonDown("X2"))
                     {
                         //MapView
-
+                        SwitchCharacter();
                         //A - Select Tile
                     }
                     else if (Input.GetButtonDown("A2"))
@@ -605,11 +625,9 @@ public class GridSceneManager : MonoBehaviour
             }
         }
     }
-
-    //start of turn
-    void NextTurn()
+    void SwitchCharacter()
     {
-        GameManager.turn = (GameManager.turn + 1) % 8;
+        GameManager.turn = CharactersToMove[(CharactersToMove.IndexOf(GameManager.turn) + 1) % CharactersToMove.Count];
         currentCharacter = GameManager.fighters[GameManager.turn];
         //send cursor to currentCharacter
         cursorX = currentCharacter.xPos;
@@ -623,10 +641,43 @@ public class GridSceneManager : MonoBehaviour
         takeInput = true;
     }
 
+    //start of turn
+    void NextTurn()
+    {
+        if (CharactersToMove.Count > 1)
+        {
+            int lastIndex = CharactersToMove.IndexOf(GameManager.turn);
+            CharactersToMove.Remove(GameManager.turn);
+            GameManager.turn = CharactersToMove[lastIndex % CharactersToMove.Count];
+        }
+        else
+        {
+            CharactersToMove.Clear();
+            //GameManager.turn = (GameManager.turn + 1) % 8;
+            GameManager.turn = ((GameManager.turn / 4) * 4 + 4) % 8;
+            CharactersToMove.Add(GameManager.turn);
+            CharactersToMove.Add(GameManager.turn + 1);
+            CharactersToMove.Add(GameManager.turn + 2);
+            CharactersToMove.Add(GameManager.turn + 3);
+        }
+        currentCharacter = GameManager.fighters[GameManager.turn];
+        //send cursor to currentCharacter
+        cursorX = currentCharacter.xPos;
+        cursorY = currentCharacter.zPos;
+        Cursor.transform.position = GameManager.gridSpaces[cursorX, cursorY].transform.position;
+        //clear EVERYTHING
+        takeInput = false;
+        movementStack.Clear();
+        movementStack.Push(GameManager.gridSpaces[currentCharacter.xPos, currentCharacter.zPos]);
+        range = 0;
+        takeInput = true;
+    
+    }
 
 
 
-    IEnumerator MoveCharacter(GameObject[] Path)
+
+IEnumerator MoveCharacter(GameObject[] Path)
     {
         GameObject guy = CharacterModels[GameManager.turn];
         //turn on walk animation

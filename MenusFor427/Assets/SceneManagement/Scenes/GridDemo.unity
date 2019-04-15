@@ -587,7 +587,37 @@ Prefab:
         type: 2}
       propertyPath: HealthBar
       value: 
-      objectReference: {fileID: 1412791017706258, guid: 5f8116985a5d93b4da57aeb9ef07990f,
+      objectReference: {fileID: 1750779136171704, guid: 7fd27b6b3f67a3f49ad56e207f727a5f,
+        type: 2}
+    - target: {fileID: 114569823798719134, guid: 55e9e29fee06af14a990615dc651fa9c,
+        type: 2}
+      propertyPath: LeaderHealthBar
+      value: 
+      objectReference: {fileID: 1464149887656662, guid: f13530872f0707b419bca09af0b285ce,
+        type: 2}
+    - target: {fileID: 114569823798719134, guid: 55e9e29fee06af14a990615dc651fa9c,
+        type: 2}
+      propertyPath: HealthBarBlue
+      value: 
+      objectReference: {fileID: 1994817865693230, guid: 6fa498493324ce240a61eb631a6373c5,
+        type: 2}
+    - target: {fileID: 114569823798719134, guid: 55e9e29fee06af14a990615dc651fa9c,
+        type: 2}
+      propertyPath: HealthBarRed
+      value: 
+      objectReference: {fileID: 1697870882048644, guid: cf7037f570cdf68409673562ab13a98e,
+        type: 2}
+    - target: {fileID: 114569823798719134, guid: 55e9e29fee06af14a990615dc651fa9c,
+        type: 2}
+      propertyPath: LeaderHealthBarBlue
+      value: 
+      objectReference: {fileID: 1915402503001648, guid: d79a0e9586d02ff45bf702a408166ce1,
+        type: 2}
+    - target: {fileID: 114569823798719134, guid: 55e9e29fee06af14a990615dc651fa9c,
+        type: 2}
+      propertyPath: LeaderHealthBarRed
+      value: 
+      objectReference: {fileID: 1495150484647696, guid: 1601a7b339e334949b05e7b3968a3f70,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55e9e29fee06af14a990615dc651fa9c, type: 2}
