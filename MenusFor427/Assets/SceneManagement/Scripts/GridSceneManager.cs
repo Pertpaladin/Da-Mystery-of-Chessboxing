@@ -35,7 +35,7 @@ public class GridSceneManager : MonoBehaviour
 
 
     //UI
-    public static GameObject Cursor;
+    public GameObject Cursor;
     int cursorX;
     int cursorY;
 
@@ -163,7 +163,11 @@ public class GridSceneManager : MonoBehaviour
                 case 1:
                 case 2:
                 case 3:
-                    if (Input.GetButtonDown("X1"))
+                    if (Input.GetButtonDown("Y1"))
+                    {
+                        GameObject.Find("Main Camera").GetComponent<CameraFollow>().CameraRotate();
+                    }
+                    else if (Input.GetButtonDown("X1"))
                     {
                         //Switch Character
                         SwitchCharacter();
@@ -391,7 +395,11 @@ public class GridSceneManager : MonoBehaviour
                 case 5:
                 case 6:
                 case 7:
-                    if (Input.GetButtonDown("X2"))
+                    if (Input.GetButtonDown("Y2"))
+                    {
+                        GameObject.Find("Main Camera").GetComponent<CameraFollow>().CameraRotate();
+                    }
+                    else if (Input.GetButtonDown("X2"))
                     {
                         //MapView
                         SwitchCharacter();
