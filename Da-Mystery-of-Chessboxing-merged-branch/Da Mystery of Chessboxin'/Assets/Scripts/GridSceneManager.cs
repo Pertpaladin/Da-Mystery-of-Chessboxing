@@ -45,6 +45,7 @@ public class GridSceneManager : MonoBehaviour
     //movement
     Stack<GameObject> movementStack;
     public int range;
+    public int bonusRange;
 
     //controller
     Fighter currentCharacter;
@@ -186,6 +187,7 @@ public class GridSceneManager : MonoBehaviour
                         if (cursorX == currentCharacter.xPos && cursorY == currentCharacter.zPos)
                         {
                             takeInput = false;
+                            bonusRange += 1;
                             CheckForEnemy();
                         }
                         //move
@@ -213,6 +215,7 @@ public class GridSceneManager : MonoBehaviour
                             whereThePlayers[GameManager.turn, 1] = cursorY;
                             currentCharacter.xPos = cursorX;
                             currentCharacter.zPos = cursorY;
+                            
 
                             break;
                         }
@@ -284,7 +287,7 @@ public class GridSceneManager : MonoBehaviour
                         else
                         {
                             //check to see if in range
-                            if (range >= currentCharacter.range)
+                            if (range >= currentCharacter.range + bonusRange)
                             {
                                 cursorX -= (int)Input.GetAxisRaw("DX1");
                             }
@@ -369,7 +372,7 @@ public class GridSceneManager : MonoBehaviour
                         else
                         {
                             //check to see if range maxed
-                            if (range >= currentCharacter.range)
+                            if (range >= currentCharacter.range + bonusRange)
                             {
                                 cursorY -= (int)Input.GetAxisRaw("DY1");
                             }
@@ -436,6 +439,7 @@ public class GridSceneManager : MonoBehaviour
                         if (cursorX == currentCharacter.xPos && cursorY == currentCharacter.zPos)
                         {
                             takeInput = false;
+                            bonusRange += 1;
                             CheckForEnemy();
 
                         }
@@ -462,6 +466,7 @@ public class GridSceneManager : MonoBehaviour
                             whereThePlayers[GameManager.turn, 1] = cursorY;
                             currentCharacter.xPos = cursorX;
                             currentCharacter.zPos = cursorY;
+                            
                             break;
                         }
                     }
@@ -535,7 +540,7 @@ public class GridSceneManager : MonoBehaviour
                         else
                         {
                             //check to see if in range
-                            if (range >= currentCharacter.range)
+                            if (range >= currentCharacter.range + bonusRange)
                             {
                                 cursorX -= (int)Input.GetAxisRaw("DX2");
                             }
@@ -623,7 +628,7 @@ public class GridSceneManager : MonoBehaviour
                         else
                         {
                             //check to see if range maxed
-                            if (range >= currentCharacter.range)
+                            if (range >= currentCharacter.range + bonusRange)
                             {
                                 cursorY -= (int)Input.GetAxisRaw("DY2");
                             }
@@ -712,6 +717,7 @@ public class GridSceneManager : MonoBehaviour
             CharactersToMove.Add(GameManager.turn + 1);
             CharactersToMove.Add(GameManager.turn + 2);
             CharactersToMove.Add(GameManager.turn + 3);
+            bonusRange = 0;
         }
         currentCharacter = GameManager.fighters[GameManager.turn];
         //send cursor to currentCharacter
@@ -756,6 +762,10 @@ IEnumerator MoveCharacter(GameObject[] Path)
             }
             
             //guy.transform.position = Path[i].transform.position;
+        }
+        if (range > currentCharacter.range)
+        {
+            bonusRange -= range - currentCharacter.range;
         }
         CheckForEnemy();
     }
