@@ -43,39 +43,27 @@ public class character : MonoBehaviour {
 
     void buttonPress()
     {
-        if (Input.GetButtonDown("light punch") == true)
+        if (Input.GetButtonDown("light punch") == true && canAnim)
         {
             animator.SetBool("X", true);
-        }
-        else if (Input.GetButtonDown("heavy punch") == true)
-        {
-            animator.SetBool("Y", true);
-        }
-        else if (Input.GetButtonDown("light kick") == true)
-        {
-            animator.SetBool("A", true);
-        }
-        else if (Input.GetButtonDown("heavy kick") == true)
-        {
-            animator.SetBool("B", true);
-        }
-        if (Input.GetButtonUp("light punch") == true && canAnim)
-        {
             canAnim = false;
             StartCoroutine(WaitLP());
         }
-        if (Input.GetButtonUp("heavy punch") == true && canAnim)
+        else if (Input.GetButtonDown("heavy punch") == true && canAnim)
         {
+            animator.SetBool("Y", true);
             canAnim = false;
             StartCoroutine(WaitHP());
         }
-        if (Input.GetButtonUp("light kick") == true && canAnim)
+        else if (Input.GetButtonDown("light kick") == true && canAnim)
         {
+            animator.SetBool("A", true);
             canAnim = false;
             StartCoroutine(WaitLK());
         }
-        if (Input.GetButtonUp("heavy kick") == true && canAnim)
+        else if (Input.GetButtonDown("heavy kick") == true && canAnim)
         {
+            animator.SetBool("B", true);
             canAnim = false;
             StartCoroutine(WaitHK());
         }
