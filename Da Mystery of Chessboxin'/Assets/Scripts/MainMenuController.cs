@@ -15,10 +15,12 @@ public class MainMenuController : MonoBehaviour {
 
         GameManager.turn = -1;
         index = 0;
-        buttons = new Image[3];
+        buttons = new Image[5];
         buttons[0] = GameObject.Find("Chessboxing").GetComponent<Image>();
         buttons[1] = GameObject.Find("Boxing").GetComponent<Image>();
         buttons[2] = GameObject.Find("Quit").GetComponent<Image>();
+        buttons[3] = GameObject.Find("Game Information").GetComponent<Image>();
+        buttons[4] = GameObject.Find("Credits").GetComponent<Image>();
         /*
         GameManager.fighterGameObjects[0] = CHAR00;
         GameManager.fighterGameObjects[1] = CHAR01;
@@ -49,22 +51,29 @@ public class MainMenuController : MonoBehaviour {
             {
                 Application.Quit();
             }
+            else if(index == 3)
+            {
+                SceneManager.LoadScene("Game Info");
+            }
+            else if(index == 4)
+            {
+                SceneManager.LoadScene("Credits");
+            }
         }
-        
             if (Input.GetAxisRaw("DY1") >= 1 && previousInput == 0)
             {
                 buttons[index].enabled = false;
                 if (index > 0)
-                    index = (index - 1) % 3;
+                    index = (index - 1) % 5;
                 else
-                    index = 2;
+                    index = 4;
                 buttons[index].enabled = true;
                 previousInput = 1;
             }
             else if (Input.GetAxisRaw("DY1") <= -1 && previousInput == 0)
             {
                 buttons[index].enabled = false;
-                index = (index + 1) % 3;
+                index = (index + 1) % 5;
                 buttons[index].enabled = true;
                 previousInput = -1;
             }

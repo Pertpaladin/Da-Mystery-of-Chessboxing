@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -145,7 +145,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 180}
+  m_AnchoredPosition: {x: 0, y: -108}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &10799342
@@ -180,7 +180,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: CREATE TEAM
+  m_Text: Assemble Your Gang
 --- !u!222 &10799343
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -255,7 +255,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: CHAR 02
+  m_Text: Slick Rick
 --- !u!222 &39483833
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1212,7 +1212,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: CHAR 13
+  m_Text: Ludacris
 --- !u!222 &917400247
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1399,9 +1399,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'CHAR 00
-
-'
+  m_Text: GFK
 --- !u!222 &977920466
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1829,9 +1827,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'CHAR 01
-
-'
+  m_Text: Danny Trejo
 --- !u!222 &1263116684
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1981,9 +1977,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'CHAR 10
-
-'
+  m_Text: Method Man
 --- !u!222 &1482676375
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2170,7 +2164,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: CHAR 03
+  m_Text: Ice-T
 --- !u!222 &1581006165
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2245,7 +2239,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: CHAR 12
+  m_Text: Busta Rhymes
 --- !u!222 &1626998508
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2432,9 +2426,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'CHAR 11
-
-'
+  m_Text: X-Zibit
 --- !u!222 &1788884329
 CanvasRenderer:
   m_ObjectHideFlags: 0

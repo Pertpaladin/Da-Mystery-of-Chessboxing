@@ -8,6 +8,8 @@ public class Song_selector : MonoBehaviour {
     public AudioClip second;
     public AudioClip third;
     public AudioClip fourth;
+    public AudioClip fifth;
+    public AudioClip sixth;
     private bool canPlay = true;
 
 
@@ -20,7 +22,7 @@ public class Song_selector : MonoBehaviour {
 	void Update () {
         if (canPlay)
         {
-            switch (Random.Range(1, 4))
+            switch (Random.Range(1, 6))
             {
                 case 1:
                     audioManager.clip = first;
@@ -42,6 +44,18 @@ public class Song_selector : MonoBehaviour {
                     break;
                 case 4:
                     audioManager.clip = fourth;
+                    audioManager.Play();
+                    canPlay = false;
+                    StartCoroutine("PlayMoosic");
+                    break;
+                case 5:
+                    audioManager.clip = fifth;
+                    audioManager.Play();
+                    canPlay = false;
+                    StartCoroutine("PlayMoosic");
+                    break;
+                case 6:
+                    audioManager.clip = sixth;
                     audioManager.Play();
                     canPlay = false;
                     StartCoroutine("PlayMoosic");

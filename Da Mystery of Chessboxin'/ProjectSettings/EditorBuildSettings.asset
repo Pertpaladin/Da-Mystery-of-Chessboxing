@@ -5,16 +5,31 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/SceneManagement/Scenes/MainMenu.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/MainMenu.unity
+    guid: 7557de87eb21c2442be72d9c7e7053d7
   - enabled: 1
-    path: Assets/SceneManagement/Scenes/CharacterSelect.unity
+    path: Assets/Scenes/CharacterSelect.unity
     guid: 8b0ddc3400cd71840999faa134257ef0
   - enabled: 1
-    path: Assets/SceneManagement/Scenes/GridDemo.unity
+    path: Assets/Scenes/GridDemo.unity
     guid: 55b19efd9823001459d5af8dfdfa2324
   - enabled: 1
-    path: Assets/SceneManagement/Scenes/DummyScene.unity
+    path: Assets/Scenes/DummyScene.unity
     guid: e950eab81381031458d1a3851bffeec3
+  - enabled: 1
+    path: Assets/Scenes/Startegy_Scene.unity
+    guid: 9b613cdbdc0157d4eb2523ac6c6ab87e
+  - enabled: 1
+    path: Assets/Scenes/Fighting_Scene.unity
+    guid: e36c43425c25c844f8d5e6267e57deb3
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+    guid: 74a699c79398dde4fb6d48a5bcdb3656
+  - enabled: 1
+    path: Assets/Scenes/Game Info.unity
+    guid: f48efc6ad2d03f94b936958464a3aff0
   m_configObjects: {}

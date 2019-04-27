@@ -274,7 +274,7 @@ public class CharacterSelectController : MonoBehaviour
                 SceneManager.LoadScene("GridDemo");
             } else
             {
-                SceneManager.LoadScene("FightMode");
+                SceneManager.LoadScene("Fighting_Scene");
             }
         }
         }
