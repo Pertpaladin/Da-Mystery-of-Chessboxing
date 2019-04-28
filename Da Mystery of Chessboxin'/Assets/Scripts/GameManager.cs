@@ -36,4 +36,5 @@ public static class GameManager{
 
     //Camera location
     public static int cameraLocation;
+    public static int bonus;
 }

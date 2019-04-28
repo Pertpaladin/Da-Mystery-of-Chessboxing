@@ -146,45 +146,58 @@ public class GridSceneManager : MonoBehaviour
                 else
                 {
                     GameManager.fighters[i].xPos = 34;
-                    GameManager.fighters[i].zPos = 10-i;
+                    GameManager.fighters[i].zPos = 10+i;
                 }
-            }
-            CharacterModels[i] =
-                Instantiate(GameManager.fighterGameObjects[GameManager.fighters[i].model],
-                GameManager.gridSpaces[GameManager.fighters[i].xPos, GameManager.fighters[i].zPos].transform.position, new Quaternion());
-            CharacterModels[i].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
-            CharacterModels[i].GetComponent<character>().enabled = false;
-            CharacterModels[i].GetComponent<CapsuleCollider>().radius = 0.1f;
-            for (int j = 0; j < 8; j++)
+            } else
             {
-                if (i == j)
+                bonusRange = GameManager.bonus;
+            }
+            if (GameManager.fighters[i].health > 0)
+            {
+                CharacterModels[i] =
+                    Instantiate(GameManager.fighterGameObjects[GameManager.fighters[i].model],
+                    GameManager.gridSpaces[GameManager.fighters[i].xPos, GameManager.fighters[i].zPos].transform.position, new Quaternion());
+                CharacterModels[i].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+                CharacterModels[i].GetComponent<character>().enabled = false;
+                CharacterModels[i].GetComponent<CapsuleCollider>().radius = 0.1f;
+                for (int j = 0; j < 8; j++)
                 {
-                    continue;
+                    if (i == j)
+                    {
+                        continue;
+                    }
+                    else if (GameManager.fighters[i].xPos == whereThePlayers[j, 0] && GameManager.fighters[i].zPos /*- (int)Input.GetAxisRaw("DY2")*/ == whereThePlayers[j, 1])
+                    {
+                        CharacterModels[i].transform.position += new Vector3(3, 0, 0);
+                        CharacterModels[j].transform.position -= new Vector3(3, 0, 0);
+                        CharacterModels[i].transform.LookAt(CharacterModels[j].transform);
+                        CharacterModels[j].transform.LookAt(CharacterModels[i].transform);
+                    }
                 }
-                else if (GameManager.fighters[i].xPos == whereThePlayers[j, 0] && GameManager.fighters[i].zPos /*- (int)Input.GetAxisRaw("DY2")*/ == whereThePlayers[j, 1])
+                if (i == 0)
                 {
-                    CharacterModels[i].transform.position += new Vector3(3, 0, 0);
-                    CharacterModels[j].transform.position -= new Vector3(3, 0, 0);
-                    CharacterModels[i].transform.LookAt(CharacterModels[j].transform);
-                    CharacterModels[j].transform.LookAt(CharacterModels[i].transform);
+                    Instantiate(LeaderHealthBarRed).GetComponent<HealthImage>().SetPlayer(i);
                 }
+                else if (i < 4)
+                {
+                    Instantiate(HealthBarRed).GetComponent<HealthImage>().SetPlayer(i);
+                }
+                else if (i == 4)
+                {
+                    Instantiate(LeaderHealthBarBlue).GetComponent<HealthImage>().SetPlayer(i);
+                }
+                else if (i <= 7 && i > 4)
+                {
+                    Instantiate(HealthBarBlue).GetComponent<HealthImage>().SetPlayer(i);
+                }
+            } else
+            {
+                GameManager.fighters[i].xPos = 0;
+                GameManager.fighters[i].zPos = 0;
             }
             whereThePlayers[i, 0] = GameManager.fighters[i].xPos;
             whereThePlayers[i, 1] = GameManager.fighters[i].zPos;
-            if(i == 0)
-            {
-                Instantiate(LeaderHealthBarRed).GetComponent<HealthImage>().SetPlayer(i);
-            } else if(i < 4)
-            {
-                Instantiate(HealthBarRed).GetComponent<HealthImage>().SetPlayer(i);
-            }
-            else if (i == 4)
-            {
-                Instantiate(LeaderHealthBarBlue).GetComponent<HealthImage>().SetPlayer(i);
-            } else if (i <= 7 && i > 4)
-            {
-                Instantiate(HealthBarBlue).GetComponent<HealthImage>().SetPlayer(i);
-            }
+            
         }
         if (GameManager.turn > -1)
         {
@@ -749,10 +762,22 @@ public class GridSceneManager : MonoBehaviour
             CharactersToMove.Clear();
             //GameManager.turn = (GameManager.turn + 1) % 8;
             GameManager.turn = ((GameManager.turn / 4) * 4 + 4) % 8;
-            CharactersToMove.Add(GameManager.turn);
-            CharactersToMove.Add(GameManager.turn + 1);
-            CharactersToMove.Add(GameManager.turn + 2);
-            CharactersToMove.Add(GameManager.turn + 3);
+            if (GameManager.fighters[GameManager.turn].health > 0)
+            {
+                CharactersToMove.Add(GameManager.turn);
+            }
+            if (GameManager.fighters[GameManager.turn + 1].health > 0)
+            {
+                CharactersToMove.Add(GameManager.turn + 1);
+            }
+            if (GameManager.fighters[GameManager.turn + 2].health > 0)
+            {
+                CharactersToMove.Add(GameManager.turn + 2);
+            }
+            if (GameManager.fighters[GameManager.turn + 3].health > 0)
+            {
+                CharactersToMove.Add(GameManager.turn + 3);
+            }
             bonusRange = 0;
         }
         currentCharacter = GameManager.fighters[GameManager.turn];
@@ -863,6 +888,7 @@ IEnumerator MoveCharacter(GameObject[] Path)
                     Debug.Log("Location 3");
 
                 }
+                GameManager.bonus = bonusRange;
                 SceneManager.LoadScene("Fighting_Scene");
             }
         }

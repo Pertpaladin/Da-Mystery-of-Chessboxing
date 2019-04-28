@@ -64,6 +64,7 @@ public class Fighter {
                         fighterName = t + " Team " + menuSelectX.ToString() + menuSelectY.ToString();
                         break;
                     case 3:
+                        team = t;
                         model = 3;
                         range = 5;
                         xPos = menuSelectX;
@@ -116,6 +117,7 @@ public class Fighter {
                         fighterName = t + " Team " + menuSelectX.ToString() + menuSelectY.ToString();
                         break;
                     case 3:
+                        team = t;
                         model = 7;
                         range = 3;
                         xPos = menuSelectX;
