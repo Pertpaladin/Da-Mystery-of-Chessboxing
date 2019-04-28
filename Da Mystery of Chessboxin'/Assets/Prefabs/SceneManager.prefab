@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1393154186687154}
+  m_IsPrefabAsset: 1
+--- !u!1 &1393154186687154
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4790171624544650}
+  - component: {fileID: 114400818156775216}
+  m_Layer: 0
+  m_Name: SceneManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4790171624544650
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1393154186687154}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.7500001, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114400818156775216
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1393154186687154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f59c62e2c7e8b954897ba7a5c97421fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CHAR00: {fileID: 1599478140402386, guid: c1f3c9eab6a824b44b633a727b0ded89, type: 2}
+  CHAR01: {fileID: 1958510946541550, guid: 0b4dcef0bbf51454ca64fe415fc93ba2, type: 2}
+  CHAR02: {fileID: 1158605964056770, guid: 07a6b221ad8a9f942b59c6232508e0cc, type: 2}
+  CHAR03: {fileID: 1072826643179794, guid: 43a8aed18799ce340959b1c7e94a8c61, type: 2}
+  CHAR10: {fileID: 1298800061911374, guid: c444415a0cd25cb42806ad2629670489, type: 2}
+  CHAR11: {fileID: 1257029891503960, guid: 10d74e380c6363842b6295f85fd9b8fb, type: 2}
+  CHAR12: {fileID: 1322149501042712, guid: 2b0ea00cac8f3834da26b93aa4621cb1, type: 2}
+  CHAR13: {fileID: 1756901938228282, guid: 7ad467e94bc5e5e43aac2a7540e6b823, type: 2}
+  HealthBarBlue: {fileID: 1827277472822880, guid: 6fa498493324ce240a61eb631a6373c5,
+    type: 2}
+  LeaderHealthBarBlue: {fileID: 1920941589586384, guid: d79a0e9586d02ff45bf702a408166ce1,
+    type: 2}
+  HealthBarRed: {fileID: 1925667607214444, guid: cf7037f570cdf68409673562ab13a98e,
+    type: 2}
+  LeaderHealthBarRed: {fileID: 1518404582110040, guid: 1601a7b339e334949b05e7b3968a3f70,
+    type: 2}
+  CursorTail: {fileID: 1823758530118366, guid: 9dbeaf6899b15a340bd4dccc2419b7c7, type: 2}
+  sheetxWide: 6
+  sheetzWide: 3
+  xWide: 7
+  zWide: 10
+  Cursor: {fileID: 1235864252171840, guid: 83276225758e69641ac41b92bb26f6ad, type: 2}
+  range: 0
+  bonusRange: 0
