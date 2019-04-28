@@ -14,7 +14,7 @@ public class Fighter {
     public float defenseStat;
     public string fighterName;
     public int model;
-    //0 is red, 1 is blue, 2 is green
+    //0 beats 2, 1 beats 0, 2 beats 1
     public int type;
 
 	public Fighter(int t,int menuSelectX,int menuSelectY)

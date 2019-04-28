@@ -42,6 +42,8 @@ public class MainMenuController : MonoBehaviour
             else if (index == 1)
             {
                 GameManager.FightType = false;
+                GameManager.team1fighterIndex = 0;
+                GameManager.team2fighterIndex = 4;
                 SceneManager.LoadScene("CharacterSelect");
             }
             else if (index == 2)

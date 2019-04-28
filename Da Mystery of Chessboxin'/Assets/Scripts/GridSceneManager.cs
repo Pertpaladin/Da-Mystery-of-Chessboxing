@@ -123,16 +123,16 @@ public class GridSceneManager : MonoBehaviour
         anim[5] = CHAR11.GetComponent<Animator>();
         anim[6] = CHAR12.GetComponent<Animator>();
         anim[7] = CHAR13.GetComponent<Animator>();
-        /*
-        GameManager.fighters[0] = new Fighter(1, 0, 0);
+
+        /*GameManager.fighters[0] = new Fighter(1, 0, 0);
         GameManager.fighters[1] = new Fighter(1, 1, 0);
         GameManager.fighters[2] = new Fighter(1, 2, 0);
         GameManager.fighters[3] = new Fighter(1, 3, 0);
         GameManager.fighters[4] = new Fighter(2, 0, 1);
         GameManager.fighters[5] = new Fighter(2, 1, 1);
         GameManager.fighters[6] = new Fighter(2, 2, 1);
-        GameManager.fighters[7] = new Fighter(2, 3, 1);
-        */
+        GameManager.fighters[7] = new Fighter(2, 3, 1);*/
+        
         //place characters
         for (int i = 0; i < 8; i++)
         {
@@ -146,7 +146,7 @@ public class GridSceneManager : MonoBehaviour
                 else
                 {
                     GameManager.fighters[i].xPos = 34;
-                    GameManager.fighters[i].zPos = 14+i-4;
+                    GameManager.fighters[i].zPos = 10-i;
                 }
             }
             CharacterModels[i] =
@@ -169,7 +169,6 @@ public class GridSceneManager : MonoBehaviour
                     CharacterModels[j].transform.LookAt(CharacterModels[i].transform);
                 }
             }
-            
             whereThePlayers[i, 0] = GameManager.fighters[i].xPos;
             whereThePlayers[i, 1] = GameManager.fighters[i].zPos;
             if(i == 0)
@@ -835,7 +834,7 @@ IEnumerator MoveCharacter(GameObject[] Path)
                     GameManager.team1fighterIndex = i;
                 }
                 newScene = true;
-                if(GameManager.gridSpaces[currentCharacter.xPos, currentCharacter.zPos].transform.parent.name.Equals("Tile Sheet (0,0)") || GameManager.gridSpaces[currentCharacter.xPos, currentCharacter.zPos].transform.parent.name.Equals("Tile Sheet (0,1)") || GameManager.gridSpaces[currentCharacter.xPos, currentCharacter.zPos].transform.parent.name.Equals("Tile Sheet (1,0)"))
+                if (GameManager.gridSpaces[currentCharacter.xPos, currentCharacter.zPos].transform.parent.name.Equals("Tile Sheet (0,0)") || GameManager.gridSpaces[currentCharacter.xPos, currentCharacter.zPos].transform.parent.name.Equals("Tile Sheet (0,1)") || GameManager.gridSpaces[currentCharacter.xPos, currentCharacter.zPos].transform.parent.name.Equals("Tile Sheet (1,0)"))
                 {
                     GameManager.cameraLocation = 0;
                     Debug.Log("Location 0");

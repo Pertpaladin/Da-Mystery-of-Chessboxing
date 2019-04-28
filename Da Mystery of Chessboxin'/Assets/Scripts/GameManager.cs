@@ -33,5 +33,7 @@ public static class GameManager{
     //fighters to load into arena
     public static int team2fighterIndex;
     public static int team1fighterIndex;
+
+    //Camera location
     public static int cameraLocation;
 }

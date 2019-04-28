@@ -1,8 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+
 public class FightSceneManager : MonoBehaviour {
+    private Text newclock;
+    private bool rightTime;
+    private int thing = 20;
     public GameObject CHAR00;
     public GameObject CHAR01;
     public GameObject CHAR02;
@@ -34,12 +39,10 @@ public class FightSceneManager : MonoBehaviour {
     GameObject fighter2;
     GameObject cam;
     int fightLocation = GameManager.cameraLocation;
-    public int countdown;
-    public int countdownStartTime = 10;
-
-
     // Use this for initialization
     void Start () {
+        newclock = GameObject.Find("Timer").GetComponent<Text>();
+        rightTime = true;
         cam = GameObject.Find("Main Camera");
         GameManager.fighterGameObjects[0] = CHAR00;
         GameManager.fighterGameObjects[1] = CHAR01;
@@ -61,8 +64,6 @@ public class FightSceneManager : MonoBehaviour {
         }
         fighter1.tag = "Player";
         fighter2.tag = "Player 2";
-        
-        
 
         switch (fightLocation)
         {
@@ -101,11 +102,22 @@ public class FightSceneManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        countdown = (int)countdownStartTime - (int)Time.timeSinceLevelLoad;
-        Debug.Log(countdown);
-        if(countdown <= 0)
+        if (rightTime)
         {
-            SceneManager.LoadScene("Startegy_Scene");
+            rightTime = false;
+            newclock.text = thing.ToString();
+            thing--;
+            StartCoroutine("Clock");
+            if(thing <= 0)
+            {
+                SceneManager.LoadScene("Startegy_Scene");
+            }
         }
 	}
+    IEnumerator Clock()
+    {
+        yield return new WaitForSecondsRealtime(1);
+        rightTime = true;
+    }
+
 }
