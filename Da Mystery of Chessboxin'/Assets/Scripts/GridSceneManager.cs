@@ -9,6 +9,7 @@ public class GridSceneManager : MonoBehaviour
 {
 
     //grid
+    public Animator[] anim;
     public GameObject CHAR00;
     public GameObject CHAR01;
     public GameObject CHAR02;
@@ -60,6 +61,7 @@ public class GridSceneManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+
         DeadTile = GameObject.Find("Plane");
         Cursor = GameObject.Find("Cursor");
         tail = new List<GameObject>();
@@ -69,7 +71,7 @@ public class GridSceneManager : MonoBehaviour
         movementStack = new Stack<GameObject>();
         CharacterModels = new GameObject[8];
         CharactersToMove = new List<int>();
-
+        anim = new Animator[8];
         //GameManager.turn = -1;
         //Map SceneGrid to GameManagerGrid
         //Only at start of Game
@@ -112,17 +114,24 @@ public class GridSceneManager : MonoBehaviour
         GameManager.fighterGameObjects[5] = CHAR11;
         GameManager.fighterGameObjects[6] = CHAR12;
         GameManager.fighterGameObjects[7] = CHAR13;
-        
 
-        
-        GameManager.fighters[0] = new Fighter(1, 0, 0);
+        anim[0] = CHAR00.GetComponent<Animator>();
+        anim[1] = CHAR01.GetComponent<Animator>();
+        anim[2] = CHAR02.GetComponent<Animator>();
+        anim[3] = CHAR03.GetComponent<Animator>();
+        anim[4] = CHAR10.GetComponent<Animator>();
+        anim[5] = CHAR11.GetComponent<Animator>();
+        anim[6] = CHAR12.GetComponent<Animator>();
+        anim[7] = CHAR13.GetComponent<Animator>();
+
+        /*GameManager.fighters[0] = new Fighter(1, 0, 0);
         GameManager.fighters[1] = new Fighter(1, 1, 0);
         GameManager.fighters[2] = new Fighter(1, 2, 0);
         GameManager.fighters[3] = new Fighter(1, 3, 0);
         GameManager.fighters[4] = new Fighter(2, 0, 1);
         GameManager.fighters[5] = new Fighter(2, 1, 1);
         GameManager.fighters[6] = new Fighter(2, 2, 1);
-        GameManager.fighters[7] = new Fighter(2, 3, 1);
+        GameManager.fighters[7] = new Fighter(2, 3, 1);*/
         
         //place characters
         for (int i = 0; i < 8; i++)
@@ -755,9 +764,9 @@ IEnumerator MoveCharacter(GameObject[] Path)
     {
         GameObject guy = CharacterModels[GameManager.turn];
         Vector3 difference;
-        int divisions = 10;
+        int divisions = 100;
         //turn on walk animation
-
+        guy.GetComponent<Animator>().SetBool("walk", true);
         
         
 
@@ -769,7 +778,7 @@ IEnumerator MoveCharacter(GameObject[] Path)
             difference = Path[i].transform.position - guy.transform.position;
             for(int j = 0; j < divisions; j++) {
                 guy.transform.position += difference / divisions;
-                yield return new WaitForSeconds(0.001f);
+                yield return new WaitForSeconds(0.00001f);
             }
             if (tail.Count > 0)
             {
@@ -782,6 +791,7 @@ IEnumerator MoveCharacter(GameObject[] Path)
             
             //guy.transform.position = Path[i].transform.position;
         }
+        guy.GetComponent<Animator>().SetBool("walk", false);
         if (range > currentCharacter.range)
         {
             bonusRange -= range - currentCharacter.range;

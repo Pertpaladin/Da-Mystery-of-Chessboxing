@@ -8,7 +8,6 @@ public class character : MonoBehaviour
     private bool canAnim;
     public float speed;
     private Rigidbody rb;
-    public int health = 100;
     public BoxCollider leftHand;
     public BoxCollider rightHand;
     public CapsuleCollider rightLegUpper;
@@ -83,10 +82,6 @@ public class character : MonoBehaviour
     void Update()
     {
         buttonPress();
-        if (this.tag == "Player")
-        {
-            Debug.Log(health);
-        }
     }
 
     void buttonPress()
@@ -183,23 +178,23 @@ public class character : MonoBehaviour
     {
         if (leftHand.enabled)
         {
-            enemy.GetComponent<character>().health -= 10;
+
         }
         if (rightHand.enabled)
         {
-            enemy.GetComponent<character>().health -= 20;
+
         }
         if (leftLeg.enabled)
         {
-            enemy.GetComponent<character>().health -= 10;
+
         }
         if (rightLeg.enabled)
         {
-            enemy.GetComponent<character>().health -= 20;
+
         }
         else if (rightLegUpper.enabled)
         {
-            enemy.GetComponent<character>().health -= 20;
+
         }
     }
 }

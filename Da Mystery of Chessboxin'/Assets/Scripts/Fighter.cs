@@ -14,6 +14,8 @@ public class Fighter {
     public float defenseStat;
     public string fighterName;
     public int model;
+    //0 is red, 1 is blue, 2 is green
+    public int type;
 
 	public Fighter(int t,int menuSelectX,int menuSelectY)
     {
@@ -31,9 +33,10 @@ public class Fighter {
                         range = 5;
                         xPos = menuSelectX;
                         zPos = menuSelectY;
-                        attackStat = 5;
-                        defenseStat = 5;
+                        attackStat = 1;
+                        defenseStat = 1;
                         health = 1;
+                        type = 0;
                         fighterName = t + " Team " + menuSelectX.ToString() + menuSelectY.ToString();
                         break;
                     case 1:
@@ -42,9 +45,10 @@ public class Fighter {
                         range = 5;
                         xPos = menuSelectX;
                         zPos = menuSelectY;
-                        attackStat = 5;
-                        defenseStat = 5;
+                        attackStat = 1;
+                        defenseStat = 1;
                         health = 1;
+                        type = 0;
                         fighterName = t + " Team " + menuSelectX.ToString() + menuSelectY.ToString();
                         break;
                     case 2:
@@ -53,9 +57,10 @@ public class Fighter {
                         range = 5;
                         xPos = menuSelectX;
                         zPos = menuSelectY;
-                        attackStat = 5;
-                        defenseStat = 5;
+                        attackStat = 1.5f;
+                        defenseStat = .5f;
                         health = 1;
+                        type = 1;
                         fighterName = t + " Team " + menuSelectX.ToString() + menuSelectY.ToString();
                         break;
                     case 3:
@@ -63,9 +68,10 @@ public class Fighter {
                         range = 5;
                         xPos = menuSelectX;
                         zPos = menuSelectY;
-                        attackStat = 5;
-                        defenseStat = 5;
+                        attackStat = 1.5f;
+                        defenseStat = .5f;
                         health = 1;
+                        type = 1;
                         fighterName = t + " Team " + menuSelectX.ToString() + menuSelectY.ToString();
                         break;
                 }
@@ -76,44 +82,48 @@ public class Fighter {
                     case 0:
                         team = t;
                         model = 4;
-                        range = 5;
+                        range = 10;
                         xPos = menuSelectX;
                         zPos = menuSelectY;
-                        attackStat = 5;
-                        defenseStat = 5;
+                        attackStat = 1;
+                        defenseStat = .5f;
                         health = 1;
+                        type = 1;
                         fighterName = t + " Team " + menuSelectX.ToString() + menuSelectY.ToString();
                         break;
                     case 1:
                         team = t;
                         model = 5;
-                        range = 5;
+                        range = 10;
                         xPos = menuSelectX;
                         zPos = menuSelectY;
-                        attackStat = 5;
-                        defenseStat = 5;
+                        attackStat = 1;
+                        defenseStat = .5f;
                         health = 1;
+                        type = 2;
                         fighterName = t + " Team " + menuSelectX.ToString() + menuSelectY.ToString();
                         break;
                     case 2:
                         team = t;
                         model = 6;
-                        range = 5;
+                        range = 3;
                         xPos = menuSelectX;
                         zPos = menuSelectY;
-                        attackStat = 5;
-                        defenseStat = 5;
+                        attackStat = .5f;
+                        defenseStat = 2;
                         health = 1;
+                        type = 2;
                         fighterName = t + " Team " + menuSelectX.ToString() + menuSelectY.ToString();
                         break;
                     case 3:
                         model = 7;
-                        range = 5;
+                        range = 3;
                         xPos = menuSelectX;
                         zPos = menuSelectY;
-                        attackStat = 5;
-                        defenseStat = 5;
+                        attackStat = .5f;
+                        defenseStat = 2;
                         health = 1;
+                        type = 2;
                         fighterName = t + " Team " + menuSelectX.ToString() + menuSelectY.ToString();
                         break;
                 }

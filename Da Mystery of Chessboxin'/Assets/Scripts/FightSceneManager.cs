@@ -47,10 +47,18 @@ public class FightSceneManager : MonoBehaviour {
         GameManager.fighterGameObjects[5] = CHAR11;
         GameManager.fighterGameObjects[6] = CHAR12;
         GameManager.fighterGameObjects[7] = CHAR13;
-        fighter1 = Instantiate(GameManager.fighterGameObjects[GameManager.fighters[GameManager.team1fighterIndex].model]);
-        fighter2 = Instantiate(GameManager.fighterGameObjects[GameManager.fighters[GameManager.team2fighterIndex].model]);
-        fighter1.tag = "player";
-        fighter2.tag = "player 2";
+        if (GameManager.FightType)
+        {
+            fighter1 = Instantiate(GameManager.fighterGameObjects[GameManager.fighters[GameManager.team1fighterIndex].model]);
+            fighter2 = Instantiate(GameManager.fighterGameObjects[GameManager.fighters[GameManager.team2fighterIndex].model]);
+        }
+        else
+        {
+            fighter1 = Instantiate(GameManager.fighterGameObjects[GameManager.fighters[0].model]);
+            fighter2 = Instantiate(GameManager.fighterGameObjects[GameManager.fighters[4].model]);
+        }
+        fighter1.tag = "Player";
+        fighter2.tag = "Player 2";
         //set to Game.Manager variable
         fightLocation = 0;
 
@@ -85,6 +93,8 @@ public class FightSceneManager : MonoBehaviour {
                 break;
         }
         cam.transform.LookAt((fighter1.transform.position + fighter2.transform.position) / 2);
+        fighter1.transform.LookAt(fighter2.transform);
+        fighter2.transform.LookAt(fighter1.transform);
     }
 	
 	// Update is called once per frame
