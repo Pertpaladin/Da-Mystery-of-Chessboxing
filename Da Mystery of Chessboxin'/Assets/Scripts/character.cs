@@ -38,6 +38,16 @@ public class character : MonoBehaviour
         float moveHorizontal2 = Input.GetAxis("Horizontal 2");
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, 0.0f);
         Vector3 movement2 = new Vector3(moveHorizontal2, 0.0f, 0.0f);
+        if(GameManager.cameraLocation == 1 || GameManager.cameraLocation == 4)
+        {
+            movement = new Vector3(0.0f , 0.0f, (int)moveHorizontal);
+            movement2 = new Vector3(0.0f, 0.0f, (int)moveHorizontal2);
+        }
+        else if (GameManager.cameraLocation == 2 || GameManager.cameraLocation == 3)
+        {
+            movement = new Vector3(-moveHorizontal, 0.0f, 0.0f);
+            movement2 = new Vector3(-moveHorizontal2, 0.0f, 0.0f);
+        }
         if (this.CompareTag("Player"))
         {
             rb.AddForce(movement * speed);

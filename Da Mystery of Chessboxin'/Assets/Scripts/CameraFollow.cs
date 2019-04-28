@@ -15,11 +15,11 @@ public class CameraFollow : MonoBehaviour {
         camPosition = 0;
         offsetRotation = new Vector3[4];
         rotationRotation = new Quaternion[4];
-        cameraOffset = new Vector3(0, 80, -45);
+        cameraOffset = new Vector3(0, 80, -65);
         offsetRotation[0] = cameraOffset;
-        offsetRotation[1] = new Vector3(32, 80, -32);
-        offsetRotation[2] = new Vector3(-32, 80, -32);
-        offsetRotation[3] = new Vector3(0, 160, -10);
+        offsetRotation[1] = new Vector3(32, 120, -48);
+        offsetRotation[2] = new Vector3(-32, 120, -48);
+        offsetRotation[3] = new Vector3(0, 240, -15);
         cursor = GameObject.Find("Cursor");
         cursorPos = cursor.transform.position;
 

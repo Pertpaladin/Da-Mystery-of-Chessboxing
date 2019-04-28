@@ -123,16 +123,16 @@ public class GridSceneManager : MonoBehaviour
         anim[5] = CHAR11.GetComponent<Animator>();
         anim[6] = CHAR12.GetComponent<Animator>();
         anim[7] = CHAR13.GetComponent<Animator>();
-
-        /*GameManager.fighters[0] = new Fighter(1, 0, 0);
+        /*
+        GameManager.fighters[0] = new Fighter(1, 0, 0);
         GameManager.fighters[1] = new Fighter(1, 1, 0);
         GameManager.fighters[2] = new Fighter(1, 2, 0);
         GameManager.fighters[3] = new Fighter(1, 3, 0);
         GameManager.fighters[4] = new Fighter(2, 0, 1);
         GameManager.fighters[5] = new Fighter(2, 1, 1);
         GameManager.fighters[6] = new Fighter(2, 2, 1);
-        GameManager.fighters[7] = new Fighter(2, 3, 1);*/
-        
+        GameManager.fighters[7] = new Fighter(2, 3, 1);
+        */
         //place characters
         for (int i = 0; i < 8; i++)
         {
@@ -145,8 +145,8 @@ public class GridSceneManager : MonoBehaviour
                 }
                 else
                 {
-                    GameManager.fighters[i].xPos = i-4;
-                    GameManager.fighters[i].zPos = 5;
+                    GameManager.fighters[i].xPos = 34;
+                    GameManager.fighters[i].zPos = 14+i-4;
                 }
             }
             CharacterModels[i] =
@@ -155,7 +155,21 @@ public class GridSceneManager : MonoBehaviour
             CharacterModels[i].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
             CharacterModels[i].GetComponent<character>().enabled = false;
             CharacterModels[i].GetComponent<CapsuleCollider>().radius = 0.1f;
-
+            for (int j = 0; j < 8; j++)
+            {
+                if (i == j)
+                {
+                    continue;
+                }
+                else if (GameManager.fighters[i].xPos == whereThePlayers[j, 0] && GameManager.fighters[i].zPos /*- (int)Input.GetAxisRaw("DY2")*/ == whereThePlayers[j, 1])
+                {
+                    CharacterModels[i].transform.position += new Vector3(3, 0, 0);
+                    CharacterModels[j].transform.position -= new Vector3(3, 0, 0);
+                    CharacterModels[i].transform.LookAt(CharacterModels[j].transform);
+                    CharacterModels[j].transform.LookAt(CharacterModels[i].transform);
+                }
+            }
+            
             whereThePlayers[i, 0] = GameManager.fighters[i].xPos;
             whereThePlayers[i, 1] = GameManager.fighters[i].zPos;
             if(i == 0)
@@ -764,7 +778,7 @@ IEnumerator MoveCharacter(GameObject[] Path)
     {
         GameObject guy = CharacterModels[GameManager.turn];
         Vector3 difference;
-        int divisions = 100;
+        int divisions = 10;
         //turn on walk animation
         guy.GetComponent<Animator>().SetBool("walk", true);
         
@@ -808,7 +822,7 @@ IEnumerator MoveCharacter(GameObject[] Path)
             {
                 continue;
             }
-            else if (cursorX == whereThePlayers[i, 0] && cursorY - (int)Input.GetAxisRaw("DY2") == whereThePlayers[i, 1])
+            else if (cursorX == whereThePlayers[i, 0] && cursorY /*- (int)Input.GetAxisRaw("DY2")*/ == whereThePlayers[i, 1])
             {
                 if (currentCharacter.team == 1)
                 {
@@ -821,7 +835,36 @@ IEnumerator MoveCharacter(GameObject[] Path)
                     GameManager.team1fighterIndex = i;
                 }
                 newScene = true;
-                SceneManager.LoadScene("DummyScene");
+                if(GameManager.gridSpaces[currentCharacter.xPos, currentCharacter.zPos].transform.parent.name.Equals("Tile Sheet (0,0)") || GameManager.gridSpaces[currentCharacter.xPos, currentCharacter.zPos].transform.parent.name.Equals("Tile Sheet (0,1)") || GameManager.gridSpaces[currentCharacter.xPos, currentCharacter.zPos].transform.parent.name.Equals("Tile Sheet (1,0)"))
+                {
+                    GameManager.cameraLocation = 0;
+                    Debug.Log("Location 0");
+                }
+                else if (GameManager.gridSpaces[currentCharacter.xPos, currentCharacter.zPos].transform.parent.name.Equals("Tile Sheet (1,1)"))
+                {
+                    GameManager.cameraLocation = 1;
+                    Debug.Log("Location 1");
+
+                }
+                else if (GameManager.gridSpaces[currentCharacter.xPos, currentCharacter.zPos].transform.parent.name.Equals("Tile Sheet (3,1)") || GameManager.gridSpaces[currentCharacter.xPos, currentCharacter.zPos].transform.parent.name.Equals("Tile Sheet (4,1)"))
+                {
+                    GameManager.cameraLocation = 2;
+                    Debug.Log("Location 2");
+
+                }
+                else if (GameManager.gridSpaces[currentCharacter.xPos, currentCharacter.zPos].transform.parent.name.Equals("Tile Sheet (5,1)") || GameManager.gridSpaces[currentCharacter.xPos, currentCharacter.zPos].transform.parent.name.Equals("Tile Sheet (5,2)"))
+                {
+                    GameManager.cameraLocation = 4;
+                    Debug.Log("Location 4");
+
+                }
+                else
+                {
+                    GameManager.cameraLocation = 3;
+                    Debug.Log("Location 3");
+
+                }
+                SceneManager.LoadScene("Fighting_Scene");
             }
         }
         if (!newScene)

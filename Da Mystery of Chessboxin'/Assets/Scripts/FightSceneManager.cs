@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class FightSceneManager : MonoBehaviour {
     public GameObject CHAR00;
     public GameObject CHAR01;
@@ -33,7 +33,9 @@ public class FightSceneManager : MonoBehaviour {
     GameObject fighter1;
     GameObject fighter2;
     GameObject cam;
-    int fightLocation;
+    int fightLocation = GameManager.cameraLocation;
+    public int countdown;
+    public int countdownStartTime = 10;
 
 
     // Use this for initialization
@@ -59,8 +61,8 @@ public class FightSceneManager : MonoBehaviour {
         }
         fighter1.tag = "Player";
         fighter2.tag = "Player 2";
-        //set to Game.Manager variable
-        fightLocation = 0;
+        
+        
 
         switch (fightLocation)
         {
@@ -99,6 +101,11 @@ public class FightSceneManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        countdown = (int)countdownStartTime - (int)Time.timeSinceLevelLoad;
+        Debug.Log(countdown);
+        if(countdown <= 0)
+        {
+            SceneManager.LoadScene("Startegy_Scene");
+        }
 	}
 }
