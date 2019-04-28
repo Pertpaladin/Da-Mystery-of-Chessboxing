@@ -19,7 +19,7 @@ public class HealthImage : MonoBehaviour
         image = transform.GetChild(1).GetComponent<Image>();
         Debug.Log(image.name);
         cam = GameObject.Find("Main Camera");
-        offset = new Vector3(0, 10f, 0);
+        offset = new Vector3(0, 40f, 0);
         bounceVector = new Vector3(0, 0.125f, 0);
         transform.position = GridSceneManager.CharacterModels[playerIndex].transform.position + offset;
         transform.LookAt(transform.position + cam.GetComponent<CameraFollow>().cameraOffset);

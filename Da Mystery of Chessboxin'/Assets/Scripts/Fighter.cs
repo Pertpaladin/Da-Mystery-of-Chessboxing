@@ -19,60 +19,107 @@ public class Fighter {
     {
         menuX = menuSelectX;
         menuY = menuSelectY;
-
-        team = t;
-        model = menuSelectX + menuSelectY * 4;
-        range = 5;
-        xPos = menuSelectX;
-        zPos = menuSelectY;
-        attackStat = 5;
-        defenseStat = 5;
-        health = 5;
-        fighterName = t + " Team " + menuSelectX.ToString() + menuSelectY.ToString();
-        /*
-        switch (menuSelectX)
+        
+        switch (menuSelectY)
         {
             case 0:
-                switch (menuSelectY)
+                switch (menuSelectX)
                 {
                     case 0:
-                    case 1:
-                    case 2:
-                    case 3:
-                        //model = GameManager.fighterGameObjects[menuSelectX * 4 + menuSelectY];
-                        model = menuSelectX * 4 + menuSelectY;
+                        team = t;
+                        model = 0;
                         range = 5;
                         xPos = menuSelectX;
                         zPos = menuSelectY;
                         attackStat = 5;
                         defenseStat = 5;
-                        health = 5;
+                        health = 1;
+                        fighterName = t + " Team " + menuSelectX.ToString() + menuSelectY.ToString();
+                        break;
+                    case 1:
+                        team = t;
+                        model = 1;
+                        range = 5;
+                        xPos = menuSelectX;
+                        zPos = menuSelectY;
+                        attackStat = 5;
+                        defenseStat = 5;
+                        health = 1;
+                        fighterName = t + " Team " + menuSelectX.ToString() + menuSelectY.ToString();
+                        break;
+                    case 2:
+                        team = t;
+                        model = 2;
+                        range = 5;
+                        xPos = menuSelectX;
+                        zPos = menuSelectY;
+                        attackStat = 5;
+                        defenseStat = 5;
+                        health = 1;
+                        fighterName = t + " Team " + menuSelectX.ToString() + menuSelectY.ToString();
+                        break;
+                    case 3:
+                        model = 3;
+                        range = 5;
+                        xPos = menuSelectX;
+                        zPos = menuSelectY;
+                        attackStat = 5;
+                        defenseStat = 5;
+                        health = 1;
                         fighterName = t + " Team " + menuSelectX.ToString() + menuSelectY.ToString();
                         break;
                 }
                 break;
             case 1:
-                switch (menuSelectY)
+                switch (menuSelectX)
                 {
                     case 0:
-                    case 1:
-                    case 2:
-                    case 3:
-                        //model = GameManager.fighterGameObjects[menuSelectX * 4 + menuSelectY];
-                        model = menuSelectX * 4 + menuSelectY;
+                        team = t;
+                        model = 4;
                         range = 5;
                         xPos = menuSelectX;
                         zPos = menuSelectY;
                         attackStat = 5;
                         defenseStat = 5;
-                        health = 5;
+                        health = 1;
+                        fighterName = t + " Team " + menuSelectX.ToString() + menuSelectY.ToString();
+                        break;
+                    case 1:
+                        team = t;
+                        model = 5;
+                        range = 5;
+                        xPos = menuSelectX;
+                        zPos = menuSelectY;
+                        attackStat = 5;
+                        defenseStat = 5;
+                        health = 1;
+                        fighterName = t + " Team " + menuSelectX.ToString() + menuSelectY.ToString();
+                        break;
+                    case 2:
+                        team = t;
+                        model = 6;
+                        range = 5;
+                        xPos = menuSelectX;
+                        zPos = menuSelectY;
+                        attackStat = 5;
+                        defenseStat = 5;
+                        health = 1;
+                        fighterName = t + " Team " + menuSelectX.ToString() + menuSelectY.ToString();
+                        break;
+                    case 3:
+                        model = 7;
+                        range = 5;
+                        xPos = menuSelectX;
+                        zPos = menuSelectY;
+                        attackStat = 5;
+                        defenseStat = 5;
+                        health = 1;
                         fighterName = t + " Team " + menuSelectX.ToString() + menuSelectY.ToString();
                         break;
                 }
                 break;
                 // attributes instantiated on character select
         }
-        */
         //Pos set to start square
         //
     }

@@ -21,6 +21,8 @@ public class GridSceneManager : MonoBehaviour
     public GameObject LeaderHealthBarBlue;
     public GameObject HealthBarRed;
     public GameObject LeaderHealthBarRed;
+    public GameObject CursorTail;
+    List<GameObject> tail;
 
     GameObject[,] tiles;
     int[,] whereThePlayers;
@@ -38,10 +40,12 @@ public class GridSceneManager : MonoBehaviour
     public GameObject Cursor;
     int cursorX;
     int cursorY;
+    Material cursorMaterial;
 
     //movement
     Stack<GameObject> movementStack;
-    int range;
+    public int range;
+    public int bonusRange;
 
     //controller
     Fighter currentCharacter;
@@ -58,6 +62,8 @@ public class GridSceneManager : MonoBehaviour
     {
         DeadTile = GameObject.Find("Plane");
         Cursor = GameObject.Find("Cursor");
+        tail = new List<GameObject>();
+        cursorMaterial = Cursor.GetComponent<Material>();
         takeInput = false;
         whereThePlayers = new int[8, 2];
         movementStack = new Stack<GameObject>();
@@ -84,7 +90,7 @@ public class GridSceneManager : MonoBehaviour
                                 SpeculateTile = DeadTile;
                                 for (int k = 0; k < SpeculateSheet.transform.childCount; k++)
                                 {
-                                    if (SpeculateSheet.transform.GetChild(k).name.Equals("Tile (" + x + "," + z + ")"))
+                                    if (SpeculateSheet.transform.GetChild(k).name.Equals("Tile (" + x + "," + z + ")") && SpeculateSheet.transform.GetChild(k).gameObject.activeSelf)
                                     {
                                         SpeculateTile = SpeculateSheet.transform.GetChild(k).gameObject;
                                     }
@@ -107,6 +113,8 @@ public class GridSceneManager : MonoBehaviour
         GameManager.fighterGameObjects[6] = CHAR12;
         GameManager.fighterGameObjects[7] = CHAR13;
         
+
+        
         GameManager.fighters[0] = new Fighter(1, 0, 0);
         GameManager.fighters[1] = new Fighter(1, 1, 0);
         GameManager.fighters[2] = new Fighter(1, 2, 0);
@@ -119,14 +127,28 @@ public class GridSceneManager : MonoBehaviour
         //place characters
         for (int i = 0; i < 8; i++)
         {
-            Debug.Log(GameManager.fighters[i].model);
+            if (GameManager.turn < 0)
+            {
+                if (i < 4)
+                {
+                    GameManager.fighters[i].xPos = i;
+                    GameManager.fighters[i].zPos = 4;
+                }
+                else
+                {
+                    GameManager.fighters[i].xPos = i-4;
+                    GameManager.fighters[i].zPos = 5;
+                }
+            }
             CharacterModels[i] =
                 Instantiate(GameManager.fighterGameObjects[GameManager.fighters[i].model],
                 GameManager.gridSpaces[GameManager.fighters[i].xPos, GameManager.fighters[i].zPos].transform.position, new Quaternion());
+            CharacterModels[i].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+            CharacterModels[i].GetComponent<character>().enabled = false;
+            CharacterModels[i].GetComponent<CapsuleCollider>().radius = 0.1f;
+
             whereThePlayers[i, 0] = GameManager.fighters[i].xPos;
             whereThePlayers[i, 1] = GameManager.fighters[i].zPos;
-            Debug.Log("Char " + i + " at " + GameManager.gridSpaces[GameManager.fighters[i].xPos, GameManager.fighters[i].zPos].transform.name);
-            //CharacterModels[i].transform.Find("Canvas").Find("Slider").GetComponent<HealthbarScript>().SetPlayer(i);
             if(i == 0)
             {
                 Instantiate(LeaderHealthBarRed).GetComponent<HealthImage>().SetPlayer(i);
@@ -179,6 +201,7 @@ public class GridSceneManager : MonoBehaviour
                         if (cursorX == currentCharacter.xPos && cursorY == currentCharacter.zPos)
                         {
                             takeInput = false;
+                            bonusRange += 1;
                             CheckForEnemy();
                         }
                         //move
@@ -206,6 +229,7 @@ public class GridSceneManager : MonoBehaviour
                             whereThePlayers[GameManager.turn, 1] = cursorY;
                             currentCharacter.xPos = cursorX;
                             currentCharacter.zPos = cursorY;
+                            
 
                             break;
                         }
@@ -224,6 +248,7 @@ public class GridSceneManager : MonoBehaviour
                         {
                             movementStack.Pop();//.GetComponent<Material>().color = Color.gray;
                         }
+                        DestroyTail();
                         movementStack.Push(GameManager.gridSpaces[cursorX, cursorY]);
                     }
 
@@ -259,6 +284,11 @@ public class GridSceneManager : MonoBehaviour
                         {
                             while (movementStack.Peek() != GameManager.gridSpaces[cursorX, cursorY])
                             {
+                                if(tail.Count > 0)
+                                {
+                                    Destroy(tail[tail.Count - 1]);
+                                    tail.RemoveAt(tail.Count - 1);
+                                }
                                 movementStack.Pop();
                                 range--;
                             }
@@ -271,7 +301,7 @@ public class GridSceneManager : MonoBehaviour
                         else
                         {
                             //check to see if in range
-                            if (range >= currentCharacter.range)
+                            if (range >= currentCharacter.range + bonusRange)
                             {
                                 cursorX -= (int)Input.GetAxisRaw("DX1");
                             }
@@ -291,6 +321,10 @@ public class GridSceneManager : MonoBehaviour
                                 }
                                 if (!occupied)
                                 {
+                                    if(movementStack.Count > 1)
+                                    {
+                                        tail.Add(Instantiate(CursorTail, Cursor.transform.position, new Quaternion()));
+                                    }
                                     movementStack.Push(GameManager.gridSpaces[cursorX, cursorY]);
                                     range++;
                                 }
@@ -302,7 +336,6 @@ public class GridSceneManager : MonoBehaviour
                         }
                         Cursor.transform.position = GameManager.gridSpaces[cursorX, cursorY].transform.position;
                         Debug.Log("Range: " + range);
-
                     }
                     else if ((Input.GetAxisRaw("DY1") >= 1 || Input.GetAxisRaw("DY1") <= -1) && previousDY1 == 0)
                     {
@@ -336,6 +369,11 @@ public class GridSceneManager : MonoBehaviour
                         {
                             while (movementStack.Peek() != GameManager.gridSpaces[cursorX, cursorY])
                             {
+                                if (tail.Count > 0)
+                                {
+                                    Destroy(tail[tail.Count - 1]);
+                                    tail.RemoveAt(tail.Count - 1);
+                                }
                                 movementStack.Pop();
                                 range--;
                             }
@@ -348,7 +386,7 @@ public class GridSceneManager : MonoBehaviour
                         else
                         {
                             //check to see if range maxed
-                            if (range >= currentCharacter.range)
+                            if (range >= currentCharacter.range + bonusRange)
                             {
                                 cursorY -= (int)Input.GetAxisRaw("DY1");
                             }
@@ -369,6 +407,10 @@ public class GridSceneManager : MonoBehaviour
                                 }
                                 if (!occupied)
                                 {
+                                    if (movementStack.Count > 1)
+                                    {
+                                        tail.Add(Instantiate(CursorTail, Cursor.transform.position, new Quaternion()));                                        
+                                    }
                                     movementStack.Push(GameManager.gridSpaces[cursorX, cursorY]);
                                     range++;
                                 }
@@ -411,6 +453,7 @@ public class GridSceneManager : MonoBehaviour
                         if (cursorX == currentCharacter.xPos && cursorY == currentCharacter.zPos)
                         {
                             takeInput = false;
+                            bonusRange += 1;
                             CheckForEnemy();
 
                         }
@@ -437,6 +480,7 @@ public class GridSceneManager : MonoBehaviour
                             whereThePlayers[GameManager.turn, 1] = cursorY;
                             currentCharacter.xPos = cursorX;
                             currentCharacter.zPos = cursorY;
+                            
                             break;
                         }
                     }
@@ -454,6 +498,7 @@ public class GridSceneManager : MonoBehaviour
                         {
                             movementStack.Pop();//.GetComponent<Material>().color = Color.gray;
                         }
+                        DestroyTail();
                         movementStack.Push(GameManager.gridSpaces[cursorX, cursorY]);
                     }
 
@@ -490,6 +535,11 @@ public class GridSceneManager : MonoBehaviour
                         {
                             while (movementStack.Peek() != GameManager.gridSpaces[cursorX, cursorY])
                             {
+                                if (tail.Count > 0)
+                                {
+                                    Destroy(tail[tail.Count - 1]);
+                                    tail.RemoveAt(tail.Count - 1);
+                                }
                                 movementStack.Pop();//.GetComponent<Material>().color = Color.gray;
                                 range--;
                             }
@@ -504,7 +554,7 @@ public class GridSceneManager : MonoBehaviour
                         else
                         {
                             //check to see if in range
-                            if (range >= currentCharacter.range)
+                            if (range >= currentCharacter.range + bonusRange)
                             {
                                 cursorX -= (int)Input.GetAxisRaw("DX2");
                             }
@@ -524,6 +574,10 @@ public class GridSceneManager : MonoBehaviour
                                 }
                                 if (!occupied)
                                 {
+                                    if (movementStack.Count > 1)
+                                    {
+                                        tail.Add(Instantiate(CursorTail, Cursor.transform.position, new Quaternion()));
+                                    }
                                     movementStack.Push(GameManager.gridSpaces[cursorX, cursorY]);
                                     //GameManager.gridSpaces[cursorX, cursorY].GetComponent<Material>().color = Color.green;
                                     range++;
@@ -569,6 +623,11 @@ public class GridSceneManager : MonoBehaviour
                         {
                             while (movementStack.Peek() != GameManager.gridSpaces[cursorX, cursorY])
                             {
+                                if (tail.Count > 0)
+                                {
+                                    Destroy(tail[tail.Count - 1]);
+                                    tail.RemoveAt(tail.Count - 1);
+                                }
                                 movementStack.Pop();//.GetComponent<Material>().color = Color.gray;
                                 range--;
                             }
@@ -583,7 +642,7 @@ public class GridSceneManager : MonoBehaviour
                         else
                         {
                             //check to see if range maxed
-                            if (range >= currentCharacter.range)
+                            if (range >= currentCharacter.range + bonusRange)
                             {
                                 cursorY -= (int)Input.GetAxisRaw("DY2");
                             }
@@ -604,6 +663,10 @@ public class GridSceneManager : MonoBehaviour
                                 }
                                 if (!occupied)
                                 {
+                                    if(movementStack.Count > 1)
+                                    {
+                                        tail.Add(Instantiate(CursorTail, Cursor.transform.position, new Quaternion()));
+                                    }
                                     movementStack.Push(GameManager.gridSpaces[cursorX, cursorY]);
                                     //GameManager.gridSpaces[cursorX, cursorY].GetComponent<Material>().color = Color.green;
                                     range++;
@@ -647,6 +710,7 @@ public class GridSceneManager : MonoBehaviour
         movementStack.Push(GameManager.gridSpaces[currentCharacter.xPos, currentCharacter.zPos]);
         range = 0;
         takeInput = true;
+        DestroyTail();
     }
 
     //start of turn
@@ -667,6 +731,7 @@ public class GridSceneManager : MonoBehaviour
             CharactersToMove.Add(GameManager.turn + 1);
             CharactersToMove.Add(GameManager.turn + 2);
             CharactersToMove.Add(GameManager.turn + 3);
+            bonusRange = 0;
         }
         currentCharacter = GameManager.fighters[GameManager.turn];
         //send cursor to currentCharacter
@@ -679,6 +744,7 @@ public class GridSceneManager : MonoBehaviour
         movementStack.Push(GameManager.gridSpaces[currentCharacter.xPos, currentCharacter.zPos]);
         range = 0;
         takeInput = true;
+        DestroyTail();
     
     }
 
@@ -688,19 +754,37 @@ public class GridSceneManager : MonoBehaviour
 IEnumerator MoveCharacter(GameObject[] Path)
     {
         GameObject guy = CharacterModels[GameManager.turn];
+        Vector3 difference;
+        int divisions = 10;
         //turn on walk animation
 
+        
+        
+
         Debug.Log("MoveCharacterCalled");
-        for (int i = Path.Length - 1; i >= 0; i--)
+        for (int i = Path.Length - 2; i >= 0; i--)
         {
             Debug.Log("Going to " + Path[i].name);
             guy.transform.LookAt(new Vector3(Path[i].transform.position.x, guy.transform.position.y, Path[i].transform.position.z));
-            while ((guy.transform.position - Path[i].transform.position).magnitude > 0)
-            {
-                guy.transform.position = Vector3.Lerp(guy.transform.position, Path[i].transform.position, 1);
-                yield return new WaitForSeconds(0.5f);
+            difference = Path[i].transform.position - guy.transform.position;
+            for(int j = 0; j < divisions; j++) {
+                guy.transform.position += difference / divisions;
+                yield return new WaitForSeconds(0.001f);
             }
+            if (tail.Count > 0)
+            {
+                if (tail[tail.Count - 1] != null)
+                {
+                    Destroy(tail[Path.Length - i - 2]);
+                    //tail.RemoveAt(0);
+                }
+            }
+            
             //guy.transform.position = Path[i].transform.position;
+        }
+        if (range > currentCharacter.range)
+        {
+            bonusRange -= range - currentCharacter.range;
         }
         CheckForEnemy();
     }
@@ -734,5 +818,13 @@ IEnumerator MoveCharacter(GameObject[] Path)
         {
             NextTurn();
         }
+    }
+    void DestroyTail()
+    {
+        foreach(GameObject x in tail)
+        {
+            Destroy(x);
+        }
+        tail.Clear();
     }
 }
